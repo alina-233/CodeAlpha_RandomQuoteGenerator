@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#171526">
+  <meta name="theme-color" content="#151323">
   <title>Random Quote Generator</title>
 
   <style>
@@ -13,27 +13,27 @@
 
     :root {
       color-scheme: dark;
-      --sky: #69538d;
-      --accent: #f1c898;
-      --mountain: #372a4e;
+      --sky: #55457f;
+      --accent: #f1bd88;
+      --mountain: #251e42;
     }
 
     :root[data-scene="1"] {
-      --sky: #79557d;
-      --accent: #f2bfd9;
-      --mountain: #432b49;
+      --sky: #644c85;
+      --accent: #e9b4d8;
+      --mountain: #2e2146;
     }
 
     :root[data-scene="2"] {
-      --sky: #326574;
-      --accent: #abe6d8;
-      --mountain: #173d49;
+      --sky: #275b6a;
+      --accent: #9ae2cf;
+      --mountain: #123541;
     }
 
     :root[data-scene="3"] {
-      --sky: #485f94;
-      --accent: #c1d6ff;
-      --mountain: #253452;
+      --sky: #424e81;
+      --accent: #b7cdfb;
+      --mountain: #202e55;
     }
 
     body {
@@ -43,25 +43,25 @@
       display: grid;
       place-items: center;
       padding: clamp(16px, 5vw, 72px);
-      color: #fff7eb;
-      background:
-        radial-gradient(ellipse at 80% 12%, var(--sky), transparent 65%),
-        #11101e;
       font-family: system-ui, sans-serif;
+      color: #fff5e8;
+      background:
+        radial-gradient(ellipse at 80% 15%, var(--sky), transparent 66%),
+        #111021;
     }
 
     main {
       position: relative;
       isolation: isolate;
       overflow: hidden;
-      width: min(100%, 1040px);
+      width: min(100%, 1080px);
       border: 1px solid #ffffff38;
       border-radius: 26px;
-      background: #151423;
-      box-shadow: 0 28px 80px #09081666;
+      background: #121324;
+      box-shadow: 0 28px 90px #06061380;
     }
 
-    /* Night-sky illustration */
+    /* Night sky, planet and mountains */
     .scene {
       position: absolute;
       inset: 0;
@@ -69,18 +69,17 @@
       overflow: hidden;
       pointer-events: none;
       background:
-        linear-gradient(90deg, #151423 4%, transparent 90%),
-        linear-gradient(150deg, #141523 20%, var(--sky) 77%, var(--accent));
+        linear-gradient(90deg, #151323 6%, transparent 88%),
+        linear-gradient(155deg, #141626 25%, var(--sky) 74%, var(--accent));
     }
 
     .stars {
       position: absolute;
       inset: 0;
-      opacity: 0.7;
       background-image:
-        radial-gradient(circle, #fff 1px, transparent 1.5px),
-        radial-gradient(circle, #fff9 1px, transparent 1.5px),
-        radial-gradient(circle, #fff6 0.8px, transparent 1.2px);
+        radial-gradient(circle, #ffffffb3 1px, transparent 1.5px),
+        radial-gradient(circle, #ffffff80 1px, transparent 1.5px),
+        radial-gradient(circle, #ffffff66 0.8px, transparent 1.2px);
       background-size: 139px 107px, 213px 157px, 83px 181px;
       background-position: 19px 7px, 69px 43px, 38px 79px;
     }
@@ -88,33 +87,34 @@
     .planet {
       position: absolute;
       top: 23%;
-      right: 9%;
-      width: 18%;
+      right: 10%;
+      width: 19%;
       aspect-ratio: 1;
       border-radius: 50%;
       background:
         repeating-linear-gradient(
-          166deg, transparent 0 9px, #ffffff12 10px 11px
+          170deg, transparent 0 8px, #ffffff12 9px 10px
         ),
-        linear-gradient(135deg, #fff3d7, var(--accent) 46%, var(--sky) 88%);
-      box-shadow: 0 0 60px #ffffff20;
+        linear-gradient(145deg, #fff4d5, var(--accent) 56%, var(--sky));
+      box-shadow: 0 0 60px #ffffff24;
     }
 
     .orbit {
       position: absolute;
-      top: 37%;
+      top: 36%;
       right: 2%;
-      width: 32%;
+      width: 35%;
       height: 12%;
-      border: 1px solid #ffffff77;
+      border: 1px solid #ffffff68;
       border-radius: 50%;
       transform: rotate(-24deg);
     }
 
     .ridge {
       position: absolute;
-      inset: auto 0 0;
-      height: 44%;
+      bottom: 0;
+      width: 100%;
+      height: 45%;
       background: var(--mountain);
       clip-path: polygon(
         0 98%, 18% 86%, 34% 91%, 52% 70%, 62% 78%,
@@ -123,49 +123,48 @@
     }
 
     .ridge.front {
-      height: 29%;
-      background: #121321;
+      height: 32%;
+      background: #121424;
       transform: scaleX(-1);
     }
 
+    /* Title and quote */
     header {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 18px clamp(22px, 5vw, 60px);
+      padding: 18px clamp(22px, 5vw, 65px);
       border-bottom: 1px solid #ffffff24;
     }
 
     header span {
       color: var(--accent);
-      font-size: 28px;
+      font: 32px Georgia, serif;
     }
 
     h1 {
       margin: 0;
       font-size: 1rem;
       font-weight: 600;
+      letter-spacing: 0.03em;
     }
 
     figure {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 280px;
+      min-height: 300px;
       margin: 0;
-      padding: 36px clamp(22px, 5vw, 60px);
+      padding: 38px clamp(22px, 5vw, 65px);
     }
 
-    /* Sentence-sized text with room for natural line breaks */
     blockquote {
       width: min(72%, 38em);
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-      font-weight: 400;
       font-style: italic;
       line-height: 1.5;
-      letter-spacing: normal;
     }
 
     figcaption {
@@ -173,7 +172,7 @@
       align-items: center;
       gap: 12px;
       margin-top: 18px;
-      color: #f2e9de;
+      color: #f1e9df;
       font-size: 0.95rem;
     }
 
@@ -184,25 +183,32 @@
       background: var(--accent);
     }
 
+    /* Navigation */
     footer {
-      padding: 0 clamp(22px, 5vw, 60px) 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 clamp(22px, 5vw, 65px) 32px;
     }
 
     button {
-      display: inline-flex;
-      align-items: center;
-      gap: 22px;
       padding: 13px 22px;
-      border: 0;
+      border: 1px solid transparent;
       border-radius: 100px;
       background: var(--accent);
-      color: #211b2a;
+      color: #20192d;
       font: 600 1rem system-ui, sans-serif;
       cursor: pointer;
     }
 
-    button:hover {
-      filter: brightness(1.08);
+    #previous {
+      border-color: #ffffff60;
+      background: #221e33;
+      color: #fff7eb;
+    }
+
+    button:enabled:hover {
+      filter: brightness(1.1);
     }
 
     button:focus-visible {
@@ -210,28 +216,37 @@
       outline-offset: 4px;
     }
 
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
     @media (max-width: 640px) {
       .planet {
-        top: 76px;
+        top: 78px;
         right: 12%;
-        width: 84px;
+        width: 80px;
       }
 
       .orbit {
-        top: 104px;
-        right: calc(12% - 23px);
+        top: 105px;
+        right: calc(12% - 25px);
         width: 130px;
-        height: 23px;
+        height: 22px;
       }
 
       figure {
-        min-height: 265px;
-        padding-top: 120px;
+        min-height: 270px;
+        padding-top: 125px;
         padding-bottom: 24px;
       }
 
       blockquote {
         width: 100%;
+      }
+
+      footer {
+        padding-bottom: 24px;
       }
     }
   </style>
@@ -258,8 +273,12 @@
     </figure>
 
     <footer>
+      <button id="previous" type="button" disabled>
+        ← Previous Quote
+      </button>
+
       <button id="next" type="button">
-        New Quote <span aria-hidden="true">→</span>
+        New Quote →
       </button>
     </footer>
   </main>
@@ -286,25 +305,45 @@
 
     const quoteText = document.getElementById("quote");
     const authorText = document.getElementById("author");
+    const previousButton = document.getElementById("previous");
     const nextButton = document.getElementById("next");
 
-    let currentIndex = Math.floor(Math.random() * quotes.length);
+    // Keep the order of quotes shown during this visit.
+    const firstIndex = Math.floor(Math.random() * quotes.length);
+    const quoteHistory = [firstIndex];
+    let position = 0;
 
     function displayQuote() {
-      const quote = quotes[currentIndex];
+      const index = quoteHistory[position];
+      const quote = quotes[index];
+
       quoteText.textContent = `“${quote.text}”`;
       authorText.textContent = quote.author;
-      document.documentElement.dataset.scene = currentIndex;
+      document.documentElement.dataset.scene = index;
+      previousButton.disabled = position === 0;
     }
 
-    function showNextQuote() {
-      // Move at least one position so the current quote cannot repeat.
-      const step = 1 + Math.floor(Math.random() * (quotes.length - 1));
-      currentIndex = (currentIndex + step) % quotes.length;
+    previousButton.addEventListener("click", () => {
+      if (position === 0) return;
+
+      position--;
       displayQuote();
-    }
+    });
 
-    nextButton.addEventListener("click", showNextQuote);
+    nextButton.addEventListener("click", () => {
+      // After going back, move forward through the quotes already seen.
+      // At the end of the history, choose a different random quote.
+      if (position === quoteHistory.length - 1) {
+        const currentIndex = quoteHistory[position];
+        const step = 1 + Math.floor(Math.random() * (quotes.length - 1));
+        const nextIndex = (currentIndex + step) % quotes.length;
+        quoteHistory.push(nextIndex);
+      }
+
+      position++;
+      displayQuote();
+    });
+
     displayQuote();
   </script>
 </body>
