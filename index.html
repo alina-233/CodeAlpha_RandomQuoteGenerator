@@ -3,83 +3,309 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171526">
   <title>Random Quote Generator</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      color-scheme: dark;
+      --sky: #69538d;
+      --accent: #f1c898;
+      --mountain: #372a4e;
+    }
+
+    :root[data-scene="1"] {
+      --sky: #79557d;
+      --accent: #f2bfd9;
+      --mountain: #432b49;
+    }
+
+    :root[data-scene="2"] {
+      --sky: #326574;
+      --accent: #abe6d8;
+      --mountain: #173d49;
+    }
+
+    :root[data-scene="3"] {
+      --sky: #485f94;
+      --accent: #c1d6ff;
+      --mountain: #253452;
+    }
 
     body {
       margin: 0;
       min-height: 100vh;
+      min-height: 100svh;
       display: grid;
       place-items: center;
-      padding: 24px;
-      background: #fff4ef;
-      color: #482031;
-      font-family: Arial, sans-serif;
+      padding: clamp(16px, 5vw, 72px);
+      color: #fff7eb;
+      background:
+        radial-gradient(ellipse at 80% 12%, var(--sky), transparent 65%),
+        #11101e;
+      font-family: system-ui, sans-serif;
     }
 
     main {
-      width: min(100%, 480px);
-      padding: 32px;
-      border: 1px solid #ead5d9;
-      border-radius: 20px;
-      background: white;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: min(100%, 1040px);
+      border: 1px solid #ffffff38;
+      border-radius: 26px;
+      background: #151423;
+      box-shadow: 0 28px 80px #09081666;
     }
 
-    h1 { margin-top: 0; font-size: 20px; }
+    /* Night-sky illustration */
+    .scene {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, #151423 4%, transparent 90%),
+        linear-gradient(150deg, #141523 20%, var(--sky) 77%, var(--accent));
+    }
 
+    .stars {
+      position: absolute;
+      inset: 0;
+      opacity: 0.7;
+      background-image:
+        radial-gradient(circle, #fff 1px, transparent 1.5px),
+        radial-gradient(circle, #fff9 1px, transparent 1.5px),
+        radial-gradient(circle, #fff6 0.8px, transparent 1.2px);
+      background-size: 139px 107px, 213px 157px, 83px 181px;
+      background-position: 19px 7px, 69px 43px, 38px 79px;
+    }
+
+    .planet {
+      position: absolute;
+      top: 23%;
+      right: 9%;
+      width: 18%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        repeating-linear-gradient(
+          166deg, transparent 0 9px, #ffffff12 10px 11px
+        ),
+        linear-gradient(135deg, #fff3d7, var(--accent) 46%, var(--sky) 88%);
+      box-shadow: 0 0 60px #ffffff20;
+    }
+
+    .orbit {
+      position: absolute;
+      top: 37%;
+      right: 2%;
+      width: 32%;
+      height: 12%;
+      border: 1px solid #ffffff77;
+      border-radius: 50%;
+      transform: rotate(-24deg);
+    }
+
+    .ridge {
+      position: absolute;
+      inset: auto 0 0;
+      height: 44%;
+      background: var(--mountain);
+      clip-path: polygon(
+        0 98%, 18% 86%, 34% 91%, 52% 70%, 62% 78%,
+        74% 43%, 83% 57%, 94% 19%, 100% 25%, 100% 100%, 0 100%
+      );
+    }
+
+    .ridge.front {
+      height: 29%;
+      background: #121321;
+      transform: scaleX(-1);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px clamp(22px, 5vw, 60px);
+      border-bottom: 1px solid #ffffff24;
+    }
+
+    header span {
+      color: var(--accent);
+      font-size: 28px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    figure {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 280px;
+      margin: 0;
+      padding: 36px clamp(22px, 5vw, 60px);
+    }
+
+    /* Sentence-sized text with room for natural line breaks */
     blockquote {
-      margin: 32px 0 12px;
-      font: 28px/1.4 Georgia, serif;
+      width: min(72%, 38em);
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      letter-spacing: normal;
     }
 
-    #author { color: #735760; }
+    figcaption {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      color: #f2e9de;
+      font-size: 0.95rem;
+    }
+
+    figcaption::before {
+      content: "";
+      width: 30px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    footer {
+      padding: 0 clamp(22px, 5vw, 60px) 32px;
+    }
 
     button {
-      margin-top: 16px;
-      padding: 12px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 22px;
+      padding: 13px 22px;
       border: 0;
-      border-radius: 8px;
-      background: #780d38;
-      color: white;
-      font: inherit;
+      border-radius: 100px;
+      background: var(--accent);
+      color: #211b2a;
+      font: 600 1rem system-ui, sans-serif;
       cursor: pointer;
     }
 
-    button:hover { background: #560828; }
+    button:hover {
+      filter: brightness(1.08);
+    }
+
+    button:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .planet {
+        top: 76px;
+        right: 12%;
+        width: 84px;
+      }
+
+      .orbit {
+        top: 104px;
+        right: calc(12% - 23px);
+        width: 130px;
+        height: 23px;
+      }
+
+      figure {
+        min-height: 265px;
+        padding-top: 120px;
+        padding-bottom: 24px;
+      }
+
+      blockquote {
+        width: 100%;
+      }
+    }
   </style>
 </head>
+
 <body>
   <main>
-    <h1>Random Quote Generator</h1>
-    <div aria-live="polite">
-      <blockquote id="quote"></blockquote>
-      <p id="author"></p>
+    <div class="scene" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="planet"></div>
+      <div class="orbit"></div>
+      <div class="ridge"></div>
+      <div class="ridge front"></div>
     </div>
-    <button id="new-quote" type="button">New Quote</button>
+
+    <header>
+      <span aria-hidden="true">✧</span>
+      <h1>Random Quote Generator</h1>
+    </header>
+
+    <figure aria-live="polite" aria-atomic="true">
+      <blockquote id="quote"></blockquote>
+      <figcaption id="author"></figcaption>
+    </figure>
+
+    <footer>
+      <button id="next" type="button">
+        New Quote <span aria-hidden="true">→</span>
+      </button>
+    </footer>
   </main>
 
   <script>
     const quotes = [
-      { text: "Brevity is the soul of wit.", author: "William Shakespeare" },
-      { text: "I dwell in Possibility.", author: "Emily Dickinson" },
-      { text: "Well done is better than well said.", author: "Benjamin Franklin" },
-      { text: "The Child is father of the Man.", author: "William Wordsworth" }
+      {
+        text: "Brevity is the soul of wit.",
+        author: "William Shakespeare"
+      },
+      {
+        text: "I dwell in Possibility.",
+        author: "Emily Dickinson"
+      },
+      {
+        text: "Well done is better than well said.",
+        author: "Benjamin Franklin"
+      },
+      {
+        text: "The Child is father of the Man.",
+        author: "William Wordsworth"
+      }
     ];
 
-    let currentQuote;
+    const quoteText = document.getElementById("quote");
+    const authorText = document.getElementById("author");
+    const nextButton = document.getElementById("next");
 
-    function showNewQuote() {
-      const choices = quotes.filter(quote => quote !== currentQuote);
-      const index = Math.floor(Math.random() * choices.length);
-      currentQuote = choices[index];
+    let currentIndex = Math.floor(Math.random() * quotes.length);
 
-      document.getElementById("quote").textContent = `“${currentQuote.text}”`;
-      document.getElementById("author").textContent = `— ${currentQuote.author}`;
+    function displayQuote() {
+      const quote = quotes[currentIndex];
+      quoteText.textContent = `“${quote.text}”`;
+      authorText.textContent = quote.author;
+      document.documentElement.dataset.scene = currentIndex;
     }
 
-    document.getElementById("new-quote").addEventListener("click", showNewQuote);
-    showNewQuote();
+    function showNextQuote() {
+      // Move at least one position so the current quote cannot repeat.
+      const step = 1 + Math.floor(Math.random() * (quotes.length - 1));
+      currentIndex = (currentIndex + step) % quotes.length;
+      displayQuote();
+    }
+
+    nextButton.addEventListener("click", showNextQuote);
+    displayQuote();
   </script>
 </body>
 </html>
