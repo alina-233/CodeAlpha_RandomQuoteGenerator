@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Quote Generator</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #fff4ef;
+      color: #482031;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      width: min(100%, 480px);
+      padding: 32px;
+      border: 1px solid #ead5d9;
+      border-radius: 20px;
+      background: white;
+    }
+
+    h1 { margin-top: 0; font-size: 20px; }
+
+    blockquote {
+      margin: 32px 0 12px;
+      font: 28px/1.4 Georgia, serif;
+    }
+
+    #author { color: #735760; }
+
+    button {
+      margin-top: 16px;
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 8px;
+      background: #780d38;
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover { background: #560828; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Random Quote Generator</h1>
+    <div aria-live="polite">
+      <blockquote id="quote"></blockquote>
+      <p id="author"></p>
+    </div>
+    <button id="new-quote" type="button">New Quote</button>
+  </main>
+
+  <script>
+    const quotes = [
+      { text: "Brevity is the soul of wit.", author: "William Shakespeare" },
+      { text: "I dwell in Possibility.", author: "Emily Dickinson" },
+      { text: "Well done is better than well said.", author: "Benjamin Franklin" },
+      { text: "The Child is father of the Man.", author: "William Wordsworth" }
+    ];
+
+    let currentQuote;
+
+    function showNewQuote() {
+      const choices = quotes.filter(quote => quote !== currentQuote);
+      const index = Math.floor(Math.random() * choices.length);
+      currentQuote = choices[index];
+
+      document.getElementById("quote").textContent = `“${currentQuote.text}”`;
+      document.getElementById("author").textContent = `— ${currentQuote.author}`;
+    }
+
+    document.getElementById("new-quote").addEventListener("click", showNewQuote);
+    showNewQuote();
+  </script>
+</body>
+</html>
